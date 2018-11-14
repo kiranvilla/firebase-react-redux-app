@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 
 import ProjectSummary from './ProjectSummary'
 
-const ProjectList = ({ projects }) => {
+const ProjectList = ({ projects, users, userProfile, uid }) => {
+    const id = uid;
+    const sigleUser = userProfile.find(user => {
+        return user.id === id
+    })
     return (
         <div className="project-list section">
             {
@@ -13,6 +17,11 @@ const ProjectList = ({ projects }) => {
                     )
                 })
             }
+            {/* {sigleUser.firstName ? (
+                <div>
+                    {sigleUser.firstName}
+                </div>
+            ): null} */}
         </div>
     )
 }

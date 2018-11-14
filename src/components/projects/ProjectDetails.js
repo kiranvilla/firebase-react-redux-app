@@ -18,7 +18,7 @@ const ProjectDetails = (props) => {
                         <p>{projectDetails.content}</p>
                     </div>
                     <div className="grey-text">
-                        <div>Psted by {projectDetails.authorFirstName} {projectDetails.authorLastName}</div>
+                        <div>Posted by {projectDetails.authorFirstName} {projectDetails.authorLastName}</div>
                         <div>10th November, 2AM</div>
                     </div>
                 </div>

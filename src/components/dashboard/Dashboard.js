@@ -10,24 +10,24 @@ import logo from '../../logo.svg';
 import './dashboard.css'
 
 class Dashboard extends Component {
+
     render() {
         // console.log(this.props.projects)
-        const { projects, auth } = this.props;
-        if(!auth.uid) return <Redirect to="/signin" />
+        const { projects, auth, users, userProfile, uid } = this.props;
+        if (!auth.uid) return <Redirect to="/signin" />
         return (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m6">
-                    {
-                        projects ? (
-                            <ProjectList projects={projects} />
-                        ) : (
-                            <div>
-                                <img src={logo} className="App-logo" alt="logo" />
-                            </div>
-                        )
-                    }
-                        {/* <ProjectList projects={projects} /> */}
+                        {
+                            projects && userProfile ? (
+                                <ProjectList projects={projects} users={users} uid={uid} userProfile={userProfile} />
+                            ) : (
+                                    <div>
+                                        <img src={logo} className="App-logo" alt="logo" />
+                                    </div>
+                                )
+                        }
                     </div>
                     <div className="col s12 m5 offset-m1">
                         <Notifications />
@@ -39,17 +39,20 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    // console.log(state)
+    console.log(state.firestore.ordered.users, state.firebase.auth.uid)
     return {
         projects: state.firestore.ordered.projects,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        userProfile: state.firestore.ordered.users,
+        uid: state.firebase.auth.uid,
     }
 }
 
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        {collection: "projects"}
+        { collection: "projects" },
+        { collection: "users" }
     ])
 )(Dashboard)
 
